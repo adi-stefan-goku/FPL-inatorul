@@ -1,0 +1,51 @@
+name: Actualizare predictii FPL
+
+on:
+  schedule:
+    - cron: "17 3 * * *"    # zilnic dupa schimbarile de pret FPL
+    - cron: "47 15 * * *"   # dupa-amiaza, pentru stiri de accidentari
+  workflow_dispatch:        # buton manual in tab-ul Actions
+
+permissions:
+  contents: write
+
+concurrency:
+  group: actualizare
+  cancel-in-progress: false
+
+jobs:
+  actualizare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalez pachetele
+        run: pip install -r requirements.txt
+
+      - name: Descarc datele FPL
+        run: python fpl_date.py
+
+      - name: Recalculez predictiile
+        run: python fpl_model.py
+
+      - name: Arhivez predictiile etapei
+        run: python arhiveaza.py
+
+      - name: Urc datele noi
+        run: |
+          git config user.name "FPL-inatorul bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/
+          if git diff --cached --quiet; then
+            echo "Nimic nou."
+          else
+            git commit -m "Date actualizate automat $(date -u +'%Y-%m-%d %H:%M') UTC"
+            git pull --rebase origin master
+            git push origin HEAD:master
+          fi
