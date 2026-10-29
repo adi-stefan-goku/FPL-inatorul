@@ -1,11 +1,9 @@
 """FPL-inatorul -- site-ul (Streamlit). Porneste-l cu porneste_site.py."""
 import os
-import subprocess
-import sys
-
 import pandas as pd
 import streamlit as st
 
+import istoric
 import team_tools as tt
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -64,19 +62,11 @@ horizon = st.sidebar.radio("Orizont pentru transferuri",
                            ["Următoarele 3 etape", "Doar etapa următoare"])
 metric = "puncte_3_etape" if horizon.startswith("Următoarele") else "puncte_prezise"
 st.sidebar.divider()
-if st.sidebar.button("🔄 Actualizează datele (2-3 min)"):
-    with st.spinner("Descarc datele noi din FPL și recalculez predicțiile..."):
-        for script in ["fpl_date.py", "fpl_model.py"]:
-            r = subprocess.run([sys.executable, os.path.join(ROOT, script)], cwd=ROOT,
-                               capture_output=True, text=True, encoding="utf-8", errors="replace")
-            if r.returncode != 0:
-                st.sidebar.error(f"{script} a eșuat:\n{r.stderr[-800:]}")
-                st.stop()
-    st.cache_data.clear()
-    st.rerun()
-st.sidebar.caption(f"Date actualizate: {pd.Timestamp(mtime, unit='s', tz='UTC').tz_convert('Europe/London'):%d %b %H:%M}")
+st.sidebar.caption(f"Date actualizate: {pd.Timestamp(mtime, unit='s', tz='UTC').tz_convert('Europe/London'):%d %b %H:%M}"
+                   " · se actualizează automat de 2 ori pe zi")
 
-tab_team, tab_top, tab_model = st.tabs(["🧑‍💼 Echipa mea", "📈 Top jucători", "🔬 Cât de bun e modelul"])
+tab_team, tab_top, tab_hist, tab_model = st.tabs(["🧑‍💼 Echipa mea", "📈 Top jucători",
+                                                  "✅ Cât de bine am ghicit", "🔬 Cât de bun e modelul"])
 
 # ---------------- Echipa mea ----------------
 with tab_team:
@@ -177,6 +167,49 @@ with tab_top:
                 "puncte_prezise": f"Pct Etapa {gw}", "puncte_3_etape": "Pct 3 etape",
                 "selected_by_percent": "Deținut %",
                 **{c: "Etapa " + c.split("_")[-1] for c in gw_cols}})
+
+# ---------------- Cat de bine am ghicit ----------------
+@st.cache_data
+def load_history(mtime):
+    return istoric.load_comparisons()
+
+
+with tab_hist:
+    st.header("Cât de bine am ghicit")
+    st.markdown("Predicțiile fiecărei etape se salvează automat **înainte de deadline** și nu se mai "
+                "modifică după aceea. După meciuri le comparăm cu punctele reale -- și le arătăm "
+                "pe toate, inclusiv etapele proaste.")
+    summary, detail = load_history(mtime)
+    if summary.empty:
+        st.info("Încă nu s-a terminat nicio etapă cu predicții salvate. Revino după prima etapă.")
+    else:
+        n = len(summary)
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Top 10 FPL-inatorul (pct/jucător)", f"{summary['Top 10 FPL-inatorul'].mean():.2f}",
+                  help="Media punctelor reale ale celor 10 jucători cu cele mai multe puncte prezise.")
+        c2.metric("Top 10 cei mai deținuți", f"{summary['Top 10 cei mai deținuți'].mean():.2f}",
+                  help="Comparație: dacă ai fi ales cei mai populari 10 jucători din FPL.")
+        c3.metric("Media tuturor jucătorilor", f"{summary['Media tuturor jucătorilor'].mean():.2f}")
+        st.caption(f"Medii pe {n} {'etapă' if n == 1 else 'etape'}. "
+                   + ("O singură etapă nu dovedește nimic -- urmărește cum evoluează cifra."
+                      if n < 5 else ""))
+
+        chart = summary.set_index("Etapa")[["Top 10 FPL-inatorul", "Top 10 cei mai deținuți",
+                                            "Media tuturor jucătorilor"]].sort_index()
+        chart.index = chart.index.map(lambda g: f"Etapa {g}")
+        st.bar_chart(chart, stack=False, y_label="Puncte reale / jucător")
+
+        show_table(summary, ["Etapa", "Top 10 FPL-inatorul", "Top 10 cei mai deținuți",
+                             "Media tuturor jucătorilor", "Căpitan recomandat", "Puncte căpitan",
+                             "Greșeala medie (pct)"], {})
+
+        st.subheader("Detalii pe etapă")
+        pick = st.selectbox("Etapa", summary["Etapa"].tolist(), format_func=lambda g: f"Etapa {g}")
+        d = detail[detail["etapa"] == pick].copy()
+        d["Poziție"] = d["position"].map(POS_RO)
+        show_table(d, ["web_name", "team_name", "Poziție", "adversar", "puncte_prezise", "puncte_reale"],
+                   {"web_name": "Jucător", "team_name": "Echipa", "adversar": "Adversar",
+                    "puncte_prezise": "Puncte prezise", "puncte_reale": "Puncte reale"})
 
 # ---------------- Despre model ----------------
 with tab_model:
