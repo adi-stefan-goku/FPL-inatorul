@@ -10,6 +10,16 @@ DATA = os.path.join(ROOT, "data")
 ARHIVA = os.path.join(DATA, "arhiva")
 
 
+def fix_venue(df):
+    """Fisierele vechi foloseau (A)=acasa / (D)=deplasare; acum folosim conventia FPL (H)/(A)."""
+    cols = [c for c in df.columns if c == "adversar" or c.startswith("adversar_etapa_")]
+    if any(df[c].astype(str).str.contains(r"\(D\)").any() for c in cols):
+        for c in cols:
+            df[c] = (df[c].astype(str).str.replace(" (A)", " (H)", regex=False)
+                                       .str.replace(" (D)", " (A)", regex=False))
+    return df
+
+
 def _real_points():
     h = pd.read_csv(os.path.join(DATA, "player_history.csv"),
                     usecols=["element", "round", "total_points", "minutes"])
@@ -28,7 +38,7 @@ def load_comparisons():
         gw = int(re.search(r"predictii_etapa_(\d+)\.csv", path).group(1))
         if gw not in finished:
             continue
-        p = pd.read_csv(path)
+        p = fix_venue(pd.read_csv(path))
         r = real[real["round"] == gw].set_index("element")
         p["puncte_reale"] = p["element"].map(r["total_points"]).fillna(0)
         p["etapa"] = gw

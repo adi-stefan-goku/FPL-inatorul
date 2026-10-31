@@ -178,7 +178,7 @@ def main():
     later = later_gameweek_rows(nxt, gw)
     allf = pd.concat([nxt, later], ignore_index=True)
     allf["pred"] = model.predict(allf[F])
-    allf["adversar"] = allf["opponent_team"].map(short) + np.where(allf["was_home"] == 1, " (A)", " (D)")
+    allf["adversar"] = allf["opponent_team"].map(short) + np.where(allf["was_home"] == 1, " (H)", " (A)")
 
     per_gw = (allf.groupby(["element", "GW"], as_index=False)
                   .agg(pred=("pred", "sum"), meciuri=("fixture", "count"),
@@ -205,7 +205,7 @@ def main():
     pred[pts_cols] = pred[pts_cols].fillna(0).round(2)
     pred["puncte_prezise"] = pred.get(f"pct_etapa_{gw}", 0)
     pred["puncte_3_etape"] = pred[pts_cols].sum(axis=1).round(2)
-    pred["adversar"] = pred.get(f"adversar_etapa_{gw}", "").fillna("fara meci")
+    pred["adversar"] = pred.get(f"adversar_etapa_{gw}", "").fillna("-")
     pred["meciuri"] = pred["element"].map(per_gw[per_gw.GW == gw].set_index("element")["meciuri"]).fillna(0).astype(int)
     pred = pred.sort_values("puncte_prezise", ascending=False)
     out = pred[["web_name", "team_name", "position", "price", "adversar", "meciuri",
