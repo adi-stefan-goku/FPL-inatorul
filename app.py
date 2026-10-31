@@ -85,70 +85,6 @@ T = {
                  "t1": "Transfer 1", "t2": "Transfer 2", "owned": "Owned %", "gw": "GW",
                  "pred": "Predicted points", "real": "Real points"},
     },
-    "ro": {
-        "pos": {"GK": "Portar", "DEF": "Fundaș", "MID": "Mijlocaș", "FWD": "Atacant"},
-        "no_data": "Nu există încă predicții.",
-        "preds_for": "Predicții pentru **Etapa {gw}**",
-        "horizon": "Orizont pentru transferuri", "h3": "Următoarele 3 etape", "h1": "Doar etapa următoare",
-        "updated": "Date actualizate: {t} · se actualizează automat de 2 ori pe zi",
-        "disclaimer": "Unealtă neoficială, fără legătură cu Premier League sau Fantasy Premier League. "
-                      "Predicțiile sunt estimări, nu garanții.",
-        "tabs": ["🧑‍💼 Echipa mea", "📈 Top jucători", "✅ Cât de bine am ghicit", "🔬 Cât de bun e modelul"],
-        "my_team": "Echipa mea", "id_label": "ID-ul echipei tale FPL",
-        "id_help": "Pe fantasy.premierleague.com → Points: numărul din adresă, după /entry/",
-        "id_digits": "ID-ul trebuie să fie doar cifre.", "reading": "Citesc echipa din FPL...",
-        "read_fail": "Nu am putut citi echipa {id} (etapa {gw}): {e}",
-        "team": "Echipa", "total": "Puncte totale", "rank": "Loc general", "bank": "Bani în bancă",
-        "squad_note": "Lotul e cel din Etapa {c}. Transferurile făcute deja pentru Etapa {gw} nu se văd public "
-                      "până la deadline.",
-        "best_xi": "Echipa de start recomandată — Etapa {gw}",
-        "captain": "**Căpitan: {c}** ({cp:.1f} pct) · Vice: {v} ({vp:.1f} pct) · "
-                   "Total prezis (cu căpitan dublat): **{t:.1f} pct**",
-        "bench": "**Rezerve** (în ordinea de intrare)",
-        "availability": "⚠️ Probleme de disponibilitate: ",
-        "transfers": "Transferuri recomandate",
-        "transfer_note": "Câștigul = puncte prezise în plus pentru echipa de start + căpitan ({h}). Prețul de "
-                         "vânzare e aproximat cu prețul curent (API-ul public nu arată prețul tău exact de vânzare).",
-        "how_many": "Câte transferuri?", "searching": "Caut cele mai bune transferuri (10-30 sec)...",
-        "no_transfer": "Nu am găsit niciun transfer care să-ți îmbunătățească echipa.",
-        "hit_note": "Dacă ai un singur transfer gratuit, al doilea costă -4 puncte: merită doar dacă câștigul "
-                    "total e clar peste 4.",
-        "small_gain": "Cel mai bun câștig e doar {g:.1f} pct — în limita zgomotului. Poți păstra transferul "
-                      "pentru săptămâna viitoare (se adună până la 5).",
-        "top": "Top jucători — Etapa {gw}", "position": "Poziție", "all": "Toate",
-        "max_price": "Preț maxim (£m)", "sort": "Sortează după", "s1": "Etapa următoare", "s3": "Următoarele 3 etape",
-        "hist_title": "Cât de bine am ghicit",
-        "hist_intro": "Predicțiile fiecărei etape se salvează automat **înainte de deadline** și nu se mai "
-                      "modifică după aceea. După meciuri le comparăm cu punctele reale — și le arătăm pe toate, "
-                      "inclusiv etapele proaste.",
-        "hist_empty": "Încă nu s-a terminat nicio etapă cu predicții salvate. Revino după prima etapă.",
-        "m_top10": "Top 10 FPL-inatorul (pct/jucător)",
-        "m_top10_help": "Media punctelor reale ale celor 10 jucători cu cele mai multe puncte prezise.",
-        "m_owned": "Top 10 cei mai deținuți",
-        "m_owned_help": "Comparație: dacă ai fi ales cei mai populari 10 jucători din FPL.",
-        "m_all": "Media tuturor jucătorilor",
-        "hist_caption": "Medii pe {n} {w}. ", "gw_one": "etapă", "gw_many": "etape",
-        "hist_small": "O singură etapă nu dovedește nimic — urmărește cum evoluează cifra.",
-        "real_pts_axis": "Puncte reale / jucător", "gw_label": "Etapa {g}",
-        "hist_detail": "Detalii pe etapă", "pick_gw": "Etapa",
-        "summary_cols": {},
-        "model_title": "Cât de bun e modelul",
-        "model_intro": "Modelul e antrenat pe toate meciurile din ultimele 4 sezoane (forma, minute, xG, xA, bonus, "
-                       "puterea echipei și a adversarului) și testat **pe sezoane pe care nu le-a văzut**. Îl "
-                       "comparăm cu metoda simplă: media punctelor din ultimele 6 meciuri.",
-        "val_cols": {},
-        "model_notes": """
-- **MAE** = greșeala medie în puncte per jucător (mai mic = mai bine).
-- **Top10** = câte puncte au făcut în medie cei 10 jucători aleși de metodă în fiecare etapă.
-- **Căpitan** = câte puncte a făcut jucătorul nr. 1 ales. Aici modelul **nu e încă dovedit** (un singur jucător pe etapă e foarte aleator).
-- Predicțiile pentru etapele 2 și 3 înainte păstrează forma de acum și schimbă doar adversarul — sunt o estimare, nevalidate separat.
-""",
-        "cols": {"player": "Jucător", "club": "Echipa", "opp": "Adversar", "pts_gw": "Pct Etapa {gw}",
-                 "pts3": "Pct 3 etape", "price": "Preț", "out": "Iese", "in": "Intră", "price_out": "Preț iese",
-                 "price_in": "Preț intră", "bank_after": "Bancă după", "gain": "Câștig (pct)",
-                 "t1": "Transfer 1", "t2": "Transfer 2", "owned": "Deținut %", "gw": "Etapa",
-                 "pred": "Puncte prezise", "real": "Puncte reale"},
-    },
 }
 
 
@@ -184,8 +120,7 @@ def show_table(df, cols, names):
     st.dataframe(df[cols].rename(columns=names), hide_index=True, width="stretch")
 
 
-lang_choice = st.sidebar.radio("Language / Limba", ["English", "Română"], horizontal=True)
-L = T["en"] if lang_choice == "English" else T["ro"]
+L = T["en"]
 POS, C = L["pos"], L["cols"]
 
 if not os.path.exists(PRED_FILE):
