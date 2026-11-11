@@ -1,42 +1,42 @@
 etapa,web_name,team_name,position,price,adversar,meciuri,puncte_prezise,puncte_3_etape,pct_etapa_11,pct_etapa_12,pct_etapa_13,adversar_etapa_11,adversar_etapa_12,adversar_etapa_13,chance_of_playing_next_round,status,selected_by_percent,element
-11,N.Jackson,Aston Villa,FWD,7.1,SUN (H),1,5.2,15.02,5.2,4.43,5.39,SUN (H),IPS (A),EVE (H),,a,30.8,166
+11,N.Jackson,Aston Villa,FWD,7.1,SUN (H),1,5.2,15.02,5.2,4.43,5.39,SUN (H),IPS (A),EVE (H),,a,30.9,166
 11,Haaland,Man City,FWD,15.8,FUL (H),1,5.02,14.54,5.02,4.62,4.9,FUL (H),ARS (A),LEE (H),100.0,a,78.9,411
 11,Isak,Liverpool,FWD,9.3,MUN (H),1,4.89,13.36,4.89,3.74,4.73,MUN (H),EVE (A),SUN (H),100.0,a,25.0,379
-11,Gabriel,Arsenal,DEF,8.1,NEW (A),1,4.65,15.3,4.65,6.0,4.65,NEW (A),MCI (H),BRE (A),,a,26.0,4
+11,Gabriel,Arsenal,DEF,8.1,NEW (A),1,4.65,15.3,4.65,6.0,4.65,NEW (A),MCI (H),BRE (A),,a,26.1,4
 11,Doku,Man City,MID,7.5,FUL (H),1,4.6,12.85,4.6,3.58,4.67,FUL (H),ARS (A),LEE (H),100.0,a,4.5,400
 11,Cherki,Man City,MID,7.9,FUL (H),1,4.46,12.16,4.46,3.22,4.48,FUL (H),ARS (A),LEE (H),,a,33.5,399
 11,Rogers,Chelsea,MID,8.2,LEE (H),1,4.46,13.24,4.46,3.79,4.99,LEE (H),NFO (A),CRY (H),,a,53.9,40
 11,Wirtz,Liverpool,MID,7.2,MUN (H),1,4.42,12.64,4.42,3.87,4.35,MUN (H),EVE (A),SUN (H),100.0,a,5.5,366
 11,Barcola,Liverpool,MID,8.1,MUN (H),1,4.4,11.7,4.4,3.15,4.15,MUN (H),EVE (A),SUN (H),,a,4.4,627
-11,Ndiaye,Man City,MID,5.8,FUL (H),1,4.36,12.1,4.36,3.22,4.52,FUL (H),ARS (A),LEE (H),,a,5.5,237
+11,Ndiaye,Man City,MID,5.8,FUL (H),1,4.36,12.1,4.36,3.22,4.52,FUL (H),ARS (A),LEE (H),,a,5.4,237
 11,Palmer,Chelsea,MID,9.8,LEE (H),1,4.36,13.56,4.36,4.1,5.1,LEE (H),NFO (A),CRY (H),100.0,a,28.4,154
 11,Rice,Arsenal,MID,7.5,NEW (A),1,4.32,13.18,4.32,4.54,4.32,NEW (A),MCI (H),BRE (A),100.0,a,13.7,13
 11,Kudus,Spurs,MID,6.6,IPS (H),1,4.31,11.89,4.31,3.6,3.98,IPS (H),SUN (A),FUL (H),100.0,a,2.0,512
 11,B.Fernandes,Man Utd,MID,11.6,LIV (A),1,4.21,13.6,4.21,5.04,4.35,LIV (A),BRE (H),NEW (A),,a,20.4,426
-11,Dewsbury-Hall,Everton,MID,6.6,BRE (A),1,4.14,12.43,4.14,4.09,4.2,BRE (A),LIV (H),AVL (A),,a,7.2,236
+11,Dewsbury-Hall,Everton,MID,6.7,BRE (A),1,4.14,12.43,4.14,4.09,4.2,BRE (A),LIV (H),AVL (A),,a,7.2,236
 11,Rayan,Bournemouth,MID,6.3,NFO (H),1,4.06,11.93,4.06,3.81,4.06,NFO (H),FUL (A),BHA (H),,a,2.4,67
 11,Barry,Everton,FWD,5.7,BRE (A),1,4.02,12.69,4.02,4.68,3.99,BRE (A),LIV (H),AVL (A),,a,10.6,249
 11,Schade,Brentford,MID,6.1,EVE (H),1,4.01,11.03,4.01,3.58,3.44,EVE (H),MUN (A),ARS (H),100.0,a,12.9,94
-11,Evanilson,Bournemouth,FWD,6.5,NFO (H),1,3.98,11.76,3.98,3.77,4.01,NFO (H),FUL (A),BHA (H),,a,23.5,79
+11,Evanilson,Bournemouth,FWD,6.5,NFO (H),1,3.98,11.76,3.98,3.77,4.01,NFO (H),FUL (A),BHA (H),,a,23.6,79
 11,Enzo,Man City,MID,6.9,FUL (H),1,3.92,10.78,3.92,2.82,4.04,FUL (H),ARS (A),LEE (H),,a,3.6,155
 11,Pickford,Everton,GK,5.5,BRE (A),1,3.91,11.22,3.91,3.73,3.58,BRE (A),LIV (H),AVL (A),,a,8.5,226
 11,Van Hecke,Spurs,DEF,5.1,IPS (H),1,3.9,11.45,3.9,3.68,3.87,IPS (H),SUN (A),FUL (H),100.0,a,14.5,112
+11,Verbruggen,Brighton,GK,4.7,HUL (A),1,3.9,10.43,3.9,4.0,2.53,HUL (A),NEW (H),BOU (A),,a,23.9,109
 11,Raya,Arsenal,GK,6.2,NEW (A),1,3.89,11.88,3.89,4.04,3.95,NEW (A),MCI (H),BRE (A),,a,47.5,1
 11,Gomez,Brighton,MID,5.0,HUL (A),1,3.88,11.0,3.88,4.37,2.75,HUL (A),NEW (H),BOU (A),,a,4.2,127
 11,Tarkowski,Everton,DEF,6.2,BRE (A),1,3.88,11.19,3.88,3.8,3.51,BRE (A),LIV (H),AVL (A),,a,19.3,229
-11,Tavernier,Bournemouth,MID,6.7,NFO (H),1,3.87,11.59,3.87,3.85,3.87,NFO (H),FUL (A),BHA (H),,a,31.2,68
+11,Tavernier,Bournemouth,MID,6.7,NFO (H),1,3.87,11.59,3.87,3.85,3.87,NFO (H),FUL (A),BHA (H),,a,31.3,68
 11,E.Le Fée,Sunderland,MID,5.7,AVL (A),1,3.87,12.12,3.87,4.38,3.87,AVL (A),TOT (H),LIV (A),,a,2.7,542
-11,Mbeumo,Man Utd,MID,7.9,LIV (A),1,3.85,12.75,3.85,4.81,4.09,LIV (A),BRE (H),NEW (A),,a,19.2,427
 11,Robertson,Spurs,DEF,4.3,IPS (H),1,3.85,10.58,3.85,3.34,3.39,IPS (H),SUN (A),FUL (H),100.0,a,2.7,502
+11,Mbeumo,Man Utd,MID,7.9,LIV (A),1,3.85,12.75,3.85,4.81,4.09,LIV (A),BRE (H),NEW (A),,a,19.1,427
+11,Wharton,Crystal Palace,MID,5.3,COV (A),1,3.78,10.68,3.78,3.97,2.93,COV (A),HUL (H),CHE (A),100.0,a,0.6,210
 11,Vuskovic,Brighton,DEF,5.3,HUL (A),1,3.78,10.69,3.78,4.33,2.58,HUL (A),NEW (H),BOU (A),,a,9.1,504
 11,Groß,Brighton,MID,6.3,HUL (A),1,3.78,11.37,3.78,4.63,2.96,HUL (A),NEW (H),BOU (A),,a,48.0,124
-11,Wharton,Crystal Palace,MID,5.3,COV (A),1,3.78,10.68,3.78,3.97,2.93,COV (A),HUL (H),CHE (A),100.0,a,0.6,210
 11,Awoniyi,Coventry City,FWD,5.4,CRY (H),1,3.77,9.63,3.77,2.66,3.2,CRY (H),LEE (A),IPS (H),100.0,a,0.3,492
 11,Calvert-Lewin,Leeds,FWD,6.0,CHE (A),1,3.77,11.2,3.77,3.92,3.51,CHE (A),COV (H),MCI (A),100.0,a,17.6,346
 11,Donnarumma,Man City,GK,5.4,FUL (H),1,3.76,11.03,3.76,3.25,4.02,FUL (H),ARS (A),LEE (H),,a,7.1,384
 11,Anderson,Man City,MID,6.2,FUL (H),1,3.76,10.8,3.76,3.09,3.95,FUL (H),ARS (A),LEE (H),100.0,a,3.6,481
 11,Rudoni,Coventry City,MID,4.9,CRY (H),1,3.75,10.53,3.75,2.93,3.85,CRY (H),LEE (A),IPS (H),100.0,a,1.2,183
-11,Verbruggen,Brighton,GK,4.6,HUL (A),1,3.74,9.91,3.74,3.8,2.37,HUL (A),NEW (H),BOU (A),,a,23.9,109
 11,Yeremy,Crystal Palace,MID,5.5,COV (A),1,3.74,11.24,3.74,4.27,3.23,COV (A),HUL (H),CHE (A),,a,0.3,211
 11,De Cuyper,Brighton,DEF,5.5,HUL (A),1,3.74,11.28,3.74,4.35,3.19,HUL (A),NEW (H),BOU (A),,a,47.7,115
 11,Araujo,Liverpool,DEF,5.5,MUN (H),1,3.73,10.74,3.73,3.28,3.73,MUN (H),EVE (A),SUN (H),,a,4.4,579
@@ -64,7 +64,7 @@ etapa,web_name,team_name,position,price,adversar,meciuri,puncte_prezise,puncte_3
 11,Roefs,Sunderland,GK,4.9,AVL (A),1,3.46,10.47,3.46,3.52,3.49,AVL (A),TOT (H),LIV (A),,a,1.9,529
 11,Szoboszlai,Liverpool,MID,6.7,MUN (H),1,3.46,10.05,3.46,3.05,3.54,MUN (H),EVE (A),SUN (H),100.0,a,13.4,368
 11,Madueke,Arsenal,MID,6.2,NEW (A),1,3.44,10.76,3.44,3.88,3.44,NEW (A),MCI (H),BRE (A),100.0,a,0.5,16
-11,Alysson,Aston Villa,MID,4.9,SUN (H),1,3.41,9.84,3.41,3.01,3.42,SUN (H),IPS (A),EVE (H),100.0,a,0.1,52
+11,Alysson,Aston Villa,MID,4.9,SUN (H),1,3.41,9.84,3.41,3.01,3.42,SUN (H),IPS (A),EVE (H),100.0,a,0.2,52
 11,Bruno G.,Arsenal,MID,6.7,NEW (A),1,3.37,10.57,3.37,3.83,3.37,NEW (A),MCI (H),BRE (A),100.0,a,2.2,452
 11,George,Everton,MID,5.5,BRE (A),1,3.36,10.23,3.36,3.61,3.26,BRE (A),LIV (H),AVL (A),,a,0.5,242
 11,Trafford,Leeds,GK,5.0,CHE (A),1,3.36,9.81,3.36,3.68,2.77,CHE (A),COV (H),MCI (A),,a,6.4,385
@@ -74,7 +74,7 @@ etapa,web_name,team_name,position,price,adversar,meciuri,puncte_prezise,puncte_3
 11,Dunk,Brighton,DEF,4.5,HUL (A),1,3.32,8.95,3.32,3.53,2.1,HUL (A),NEW (H),BOU (A),100.0,a,1.5,116
 11,Ampadu,Leeds,MID,5.3,CHE (A),1,3.31,9.64,3.31,3.36,2.97,CHE (A),COV (H),MCI (A),,a,0.7,338
 11,Kostoulas,Brighton,FWD,5.8,HUL (A),1,3.31,9.73,3.31,3.86,2.56,HUL (A),NEW (H),BOU (A),,a,9.9,138
-11,Konsa,Arsenal,DEF,4.8,NEW (A),1,3.28,10.47,3.28,3.88,3.31,NEW (A),MCI (H),BRE (A),100.0,a,24.4,31
+11,Konsa,Arsenal,DEF,4.8,NEW (A),1,3.28,10.47,3.28,3.88,3.31,NEW (A),MCI (H),BRE (A),100.0,a,24.5,31
 11,Boscagli,Brighton,DEF,4.5,HUL (A),1,3.25,8.85,3.25,3.53,2.07,HUL (A),NEW (H),BOU (A),,a,0.7,114
 11,Kerkez,Liverpool,DEF,5.3,MUN (H),1,3.24,9.22,3.24,2.74,3.24,MUN (H),EVE (A),SUN (H),,a,1.8,358
 11,Hill,Bournemouth,DEF,5.6,NFO (H),1,3.24,9.81,3.24,3.23,3.34,NFO (H),FUL (A),BHA (H),,a,3.0,60
@@ -200,7 +200,7 @@ etapa,web_name,team_name,position,price,adversar,meciuri,puncte_prezise,puncte_3
 11,Dibling,Everton,MID,5.3,BRE (A),1,2.1,6.35,2.1,2.16,2.09,BRE (A),LIV (H),AVL (A),,a,0.0,245
 11,Nketiah,Crystal Palace,FWD,5.4,COV (A),1,2.1,6.25,2.1,2.16,1.99,COV (A),HUL (H),CHE (A),100.0,a,0.4,224
 11,Isidor,Sunderland,FWD,5.4,AVL (A),1,2.07,6.03,2.07,1.96,2.0,AVL (A),TOT (H),LIV (A),100.0,a,0.7,553
-11,Emersonn,Ipswich Town,FWD,5.4,TOT (A),1,2.06,6.89,2.06,2.58,2.25,TOT (A),AVL (H),COV (A),100.0,a,2.9,316
+11,Emersonn,Ipswich Town,FWD,5.4,TOT (A),1,2.06,6.89,2.06,2.58,2.25,TOT (A),AVL (H),COV (A),100.0,a,2.8,316
 11,O'Reilly,Man City,DEF,6.2,FUL (H),1,2.05,6.08,2.05,1.9,2.13,FUL (H),ARS (A),LEE (H),100.0,a,8.1,387
 11,Bentancur,Spurs,MID,5.4,IPS (H),1,2.05,5.74,2.05,1.86,1.83,IPS (H),SUN (A),FUL (H),100.0,a,0.1,516
 11,Jair Cunha,Nott'm Forest,DEF,4.4,BOU (A),1,2.04,8.3,2.04,3.31,2.95,BOU (A),CHE (H),HUL (A),100.0,a,0.2,474
@@ -230,7 +230,7 @@ etapa,web_name,team_name,position,price,adversar,meciuri,puncte_prezise,puncte_3
 11,Muniz,Fulham,FWD,5.3,MCI (A),1,1.81,5.36,1.81,1.8,1.75,MCI (A),BOU (H),TOT (A),,a,0.3,271
 11,Barkley,Aston Villa,MID,5.0,SUN (H),1,1.81,5.58,1.81,1.99,1.78,SUN (H),IPS (A),EVE (H),100.0,a,0.2,46
 11,Giles,Hull City,DEF,4.0,BHA (H),1,1.8,5.36,1.8,1.77,1.79,BHA (H),CRY (A),NFO (H),,a,2.5,282
-11,Guéhi,Man City,DEF,6.0,FUL (H),1,1.79,5.8,1.79,1.75,2.26,FUL (H),ARS (A),LEE (H),75.0,d,14.3,388
+11,Guéhi,Man City,DEF,6.0,FUL (H),1,1.79,5.8,1.79,1.75,2.26,FUL (H),ARS (A),LEE (H),75.0,d,14.2,388
 11,Hinshelwood,Brighton,MID,5.9,HUL (A),1,1.77,5.2,1.77,1.86,1.57,HUL (A),NEW (H),BOU (A),100.0,a,0.6,123
 11,Osorio,Crystal Palace,MID,5.4,COV (A),1,1.77,5.24,1.77,1.81,1.66,COV (A),HUL (H),CHE (A),,a,0.0,647
 11,Diop,Ipswich Town,DEF,3.9,TOT (A),1,1.76,5.88,1.76,1.99,2.13,TOT (A),AVL (H),COV (A),,a,9.9,259
@@ -259,7 +259,6 @@ etapa,web_name,team_name,position,price,adversar,meciuri,puncte_prezise,puncte_3
 11,Yates,Nott'm Forest,MID,4.4,BOU (A),1,1.55,5.78,1.55,2.02,2.21,BOU (A),CHE (H),HUL (A),100.0,a,1.0,489
 11,Ngumoha,Liverpool,MID,5.7,MUN (H),1,1.55,4.52,1.55,1.45,1.52,MUN (H),EVE (A),SUN (H),,a,0.5,369
 11,Khalaili,Crystal Palace,DEF,5.0,COV (A),1,1.55,4.66,1.55,1.64,1.47,COV (A),HUL (H),CHE (A),100.0,a,0.2,588
-11,Maguire,Man Utd,DEF,4.6,LIV (A),1,1.52,4.76,1.52,1.65,1.59,LIV (A),BRE (H),NEW (A),,a,5.1,418
 11,Hackney,Everton,MID,5.3,BRE (A),1,1.52,4.49,1.52,1.47,1.5,BRE (A),LIV (H),AVL (A),100.0,a,0.1,247
 11,Palacios,Fulham,MID,5.3,MCI (A),1,1.47,4.53,1.47,1.55,1.51,MCI (A),BOU (H),TOT (A),,a,0.1,570
 11,Grimes,Coventry City,MID,4.8,CRY (H),1,1.45,4.14,1.45,1.28,1.41,CRY (H),LEE (A),IPS (H),,a,0.1,184
@@ -274,21 +273,22 @@ etapa,web_name,team_name,position,price,adversar,meciuri,puncte_prezise,puncte_3
 11,Gomes,Aston Villa,MID,5.5,SUN (H),1,1.35,4.07,1.35,1.33,1.39,SUN (H),IPS (A),EVE (H),100.0,a,0.1,54
 11,Herrington,Hull City,DEF,3.9,BHA (H),1,1.33,3.91,1.33,1.25,1.33,BHA (H),CRY (A),NFO (H),,a,0.5,585
 11,Hickey,Brentford,DEF,4.5,EVE (H),1,1.33,3.85,1.33,1.26,1.26,EVE (H),MUN (A),ARS (H),,a,0.1,90
-11,N.Angulo,Sunderland,MID,5.0,AVL (A),1,1.32,4.01,1.32,1.43,1.26,AVL (A),TOT (H),LIV (A),,a,0.1,551
 11,Nyoni,Liverpool,MID,4.8,MUN (H),1,1.32,3.91,1.32,1.27,1.32,MUN (H),EVE (A),SUN (H),,a,0.1,375
+11,N.Angulo,Sunderland,MID,5.0,AVL (A),1,1.32,4.01,1.32,1.43,1.26,AVL (A),TOT (H),LIV (A),,a,0.1,551
 11,Anthony,Brentford,MID,5.9,EVE (H),1,1.32,3.82,1.32,1.28,1.22,EVE (H),MUN (A),ARS (H),,a,0.2,105
-11,Hincapie,Arsenal,DEF,5.2,NEW (A),1,1.31,3.94,1.31,1.32,1.31,NEW (A),MCI (H),BRE (A),100.0,a,0.7,9
 11,Diouf,Brentford,DEF,4.4,EVE (H),1,1.31,3.88,1.31,1.31,1.26,EVE (H),MUN (A),ARS (H),,a,0.1,620
+11,Hincapie,Arsenal,DEF,5.2,NEW (A),1,1.31,3.94,1.31,1.32,1.31,NEW (A),MCI (H),BRE (A),100.0,a,0.7,9
 11,Cash,Aston Villa,DEF,4.3,SUN (H),1,1.3,3.99,1.3,1.33,1.36,SUN (H),IPS (A),EVE (H),100.0,a,3.6,32
 11,Schär,Newcastle,DEF,4.9,ARS (H),1,1.29,3.88,1.29,1.2,1.39,ARS (H),BHA (A),MUN (H),100.0,a,0.2,446
 11,Sessegnon,Fulham,DEF,4.3,MCI (A),1,1.23,3.6,1.23,1.18,1.19,MCI (A),BOU (H),TOT (A),100.0,a,0.2,269
 11,Tchaouna,Coventry City,MID,5.3,CRY (H),1,1.22,3.28,1.22,0.91,1.15,CRY (H),LEE (A),IPS (H),,a,0.1,190
 11,Adli,Bournemouth,MID,4.8,NFO (H),1,1.2,3.57,1.2,1.17,1.2,NFO (H),FUL (A),BHA (H),100.0,a,0.0,77
 11,McNeil,Crystal Palace,MID,5.3,COV (A),1,1.2,3.66,1.2,1.27,1.19,COV (A),HUL (H),CHE (A),,a,0.1,241
-11,Rigg,Sunderland,MID,4.8,AVL (A),1,1.18,3.53,1.18,1.23,1.12,AVL (A),TOT (H),LIV (A),,a,0.0,548
 11,Lacey,Man Utd,MID,4.9,LIV (A),1,1.18,3.63,1.18,1.23,1.22,LIV (A),BRE (H),NEW (A),,a,0.1,435
+11,Rigg,Sunderland,MID,4.8,AVL (A),1,1.18,3.53,1.18,1.23,1.12,AVL (A),TOT (H),LIV (A),,a,0.0,548
 11,George Hemmings,Aston Villa,MID,4.4,SUN (H),1,1.17,3.52,1.17,1.17,1.18,SUN (H),IPS (A),EVE (H),100.0,a,0.7,51
 11,Canvot,Crystal Palace,DEF,4.8,COV (A),1,1.17,3.53,1.17,1.21,1.15,COV (A),HUL (H),CHE (A),,a,0.2,203
+11,Maguire,Man Utd,DEF,4.6,LIV (A),1,1.14,3.98,1.14,1.45,1.39,LIV (A),BRE (H),NEW (A),75.0,d,5.1,418
 11,Zirkzee,Man Utd,FWD,5.3,LIV (A),1,1.12,3.56,1.12,1.27,1.17,LIV (A),BRE (H),NEW (A),,a,0.4,440
 11,Norton-Cuffy,Hull City,DEF,3.9,BHA (H),1,1.1,3.35,1.1,1.15,1.1,BHA (H),CRY (A),NFO (H),100.0,a,0.4,638
 11,Andrey Santos,Man Utd,MID,4.7,LIV (A),1,1.1,3.46,1.1,1.21,1.15,LIV (A),BRE (H),NEW (A),,a,0.5,162
@@ -360,7 +360,7 @@ etapa,web_name,team_name,position,price,adversar,meciuri,puncte_prezise,puncte_3
 11,Tutierov,Sunderland,MID,4.8,AVL (A),1,0.46,1.39,0.46,0.47,0.46,AVL (A),TOT (H),LIV (A),,a,0.0,668
 11,Vaz,Hull City,FWD,5.0,BHA (H),1,0.46,1.38,0.46,0.46,0.46,BHA (H),CRY (A),NFO (H),100.0,a,0.1,637
 11,J.Ramsey,Newcastle,MID,4.8,ARS (H),1,0.46,1.38,0.46,0.46,0.46,ARS (H),BHA (A),MUN (H),100.0,a,0.1,456
-11,Thomas,Coventry City,DEF,4.0,CRY (H),1,0.44,1.67,0.44,0.58,0.65,CRY (H),LEE (A),IPS (H),50.0,d,7.4,173
+11,Thomas,Coventry City,DEF,4.0,CRY (H),1,0.44,1.67,0.44,0.58,0.65,CRY (H),LEE (A),IPS (H),50.0,d,7.3,173
 11,Lukić,Ipswich Town,MID,4.9,TOT (A),1,0.44,1.35,0.44,0.45,0.46,TOT (A),AVL (H),COV (A),100.0,a,0.1,267
 11,Martinez,Chelsea,GK,4.9,LEE (H),1,0.43,1.37,0.43,0.43,0.51,LEE (H),NFO (A),CRY (H),75.0,d,3.1,28
 11,Bahoya,Leeds,MID,4.8,CHE (A),1,0.43,1.3,0.43,0.44,0.43,CHE (A),COV (H),MCI (A),100.0,a,0.0,648
@@ -499,7 +499,7 @@ etapa,web_name,team_name,position,price,adversar,meciuri,puncte_prezise,puncte_3
 11,Bendito Mantato,Man Utd,MID,4.4,LIV (A),1,0.03,0.1,0.03,0.04,0.03,LIV (A),BRE (H),NEW (A),,a,0.2,437
 11,Gyabi,Hull City,MID,4.4,BHA (H),1,0.03,0.1,0.03,0.03,0.04,BHA (H),CRY (A),NFO (H),75.0,d,0.0,297
 11,O.Richards,Nott'm Forest,DEF,3.9,BOU (A),1,0.03,0.11,0.03,0.04,0.04,BOU (A),CHE (H),HUL (A),,a,0.2,476
-11,Amass,Man Utd,DEF,4.0,LIV (A),1,0.03,0.1,0.03,0.04,0.03,LIV (A),BRE (H),NEW (A),,a,0.2,424
+11,Amass,Man Utd,DEF,3.9,LIV (A),1,0.03,0.1,0.03,0.04,0.03,LIV (A),BRE (H),NEW (A),,a,0.2,424
 11,Kusi-Asare,Fulham,FWD,4.3,MCI (A),1,0.03,0.1,0.03,0.04,0.03,MCI (A),BOU (H),TOT (A),,a,4.2,272
 11,Furlong,Ipswich Town,DEF,3.9,TOT (A),1,0.03,0.11,0.03,0.04,0.04,TOT (A),AVL (H),COV (A),,a,0.5,308
 11,Dasilva,Brentford,MID,4.8,EVE (H),1,0.02,0.1,0.02,0.04,0.04,EVE (H),MUN (A),ARS (H),25.0,d,0.0,103
