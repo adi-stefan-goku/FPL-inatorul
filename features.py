@@ -62,6 +62,25 @@ def add_features(df):
     for p in POSITIONS:
         df[f"pos_{p}"] = (df["position"] == p).astype(int)
     df["price"] = df["value"] / 10
+    return add_crowd(df)
+
+
+CROWD_COLS = ["own_rank", "tb_rank", "own_share", "tb_share"]
+
+
+def add_crowd(df):
+    """Ce stie multimea: detinere (selected) si transferuri nete (transfers_balance) facute
+    INAINTE de deadline-ul etapei, ca rang si cota in cadrul fiecarei etape (independente de scara).
+    Validat 2026-11-11: bate modelul fara ele pe toate 4 sezoanele de test (MAE si Top10)."""
+    for c in ["selected", "transfers_balance"]:
+        df[c] = pd.to_numeric(df[c], errors="coerce") if c in df else np.nan
+    g = df.groupby(["season", "GW"])
+    df["own_rank"] = g["selected"].rank(pct=True)
+    df["tb_rank"] = g["transfers_balance"].rank(pct=True)
+    df["own_share"] = df["selected"] / g["selected"].transform("sum")
+    df["tb_share"] = df["transfers_balance"] / g["transfers_balance"].transform(
+        lambda x: x.abs().sum()).replace(0, np.nan)
+    df[CROWD_COLS] = df[CROWD_COLS].fillna(0)
     return df
 
 
@@ -71,7 +90,7 @@ def feature_columns():
         cols += [f"{c}_l3", f"{c}_l6", f"{c}_season"]
     cols += ["minutes_l1", "points_l1", "prev_ppg", "prev_mpg", "prev_xgi90",
              "games_before", "team_xg_for_l6", "team_xg_against_l6", "opp_xg_for_l6",
-             "opp_xg_against_l6", "was_home", "price"] + [f"pos_{p}" for p in POSITIONS]
+             "opp_xg_against_l6", "was_home", "price"] + [f"pos_{p}" for p in POSITIONS] + CROWD_COLS
     return cols
 
 

@@ -89,6 +89,8 @@ def future_rows(players):
                              "position": p["position"], "team_id": team, "opponent_team": opp,
                              "was_home": home, "fixture": f["id"], "kickoff_time": f["kickoff_time"],
                              "value": p["now_cost"], "season": CURRENT, "round": gw, "GW": gw,
+                             "selected": p["selected_by_percent"],
+                             "transfers_balance": p["transfers_in_event"] - p["transfers_out_event"],
                              "_future": 1})
     return pd.DataFrame(rows), gw
 
