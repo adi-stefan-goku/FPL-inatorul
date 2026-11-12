@@ -37,6 +37,9 @@ jobs:
       - name: Arhivez predictiile etapei
         run: python arhiveaza.py
 
+      - name: Generez newsletter-ul saptamanal
+        run: python newsletter.py
+
       - name: Urc datele noi
         run: |
           git config user.name "FPL-inatorul bot"
