@@ -18,10 +18,29 @@ def get_json(path):
         return json.loads(resp.read().decode("utf-8"))
 
 
+class TeamNotFound(Exception):
+    pass
+
+
+class NoPicksYet(Exception):
+    pass
+
+
 def fetch_team(entry_id, gw):
     """Lotul de 15 jucatori + banii din banca pentru etapa gw (ultima etapa cu deadline trecut)."""
-    entry = get_json(f"entry/{entry_id}/")
-    picks = get_json(f"entry/{entry_id}/event/{gw}/picks/")
+    import urllib.error
+    try:
+        entry = get_json(f"entry/{entry_id}/")
+    except urllib.error.HTTPError as exc:
+        if exc.code == 404:
+            raise TeamNotFound(entry_id) from exc
+        raise
+    try:
+        picks = get_json(f"entry/{entry_id}/event/{gw}/picks/")
+    except urllib.error.HTTPError as exc:
+        if exc.code == 404:  # echipa noua, inca n-a trecut niciun deadline
+            raise NoPicksYet(entry_id) from exc
+        raise
     hist = picks.get("entry_history", {})
     return {
         "nume_echipa": entry.get("name"),
@@ -60,69 +79,101 @@ def best_xi(squad):
     return best, bench, best_pts
 
 
+FORMATIONS = [(d, m, 10 - d - m) for d in range(3, 6) for m in range(2, 6) if 1 <= 10 - d - m <= 3]
+
+
+def _fast_score(by_pos):
+    """Ca xi_score, dar pe liste simple: by_pos = {pozitie: [puncte, ...]}."""
+    srt = {p: sorted(v, reverse=True) for p, v in by_pos.items()}
+    if not srt.get("GK"):
+        return 0.0
+    best = None
+    for d, m, f in FORMATIONS:
+        need = {"DEF": d, "MID": m, "FWD": f}
+        if any(len(srt.get(p, [])) < n for p, n in need.items()):
+            continue
+        chosen = [srt["GK"][0]] + [x for p, n in need.items() for x in srt[p][:n]]
+        total = sum(chosen) + max(chosen)
+        best = total if best is None or total > best else best
+    return 0.0 if best is None else best
+
+
 def xi_score(squad):
     """Puncte prezise ale echipei de start optime + capitanul (dublat)."""
-    xi, _, pts = best_xi(squad)
-    if xi.empty:
-        return 0.0
-    return pts + xi.puncte_prezise.max()
+    by_pos = {}
+    for p, x in zip(squad.position, squad.puncte_prezise.astype(float)):
+        by_pos.setdefault(p, []).append(x)
+    return _fast_score(by_pos)
 
 
 def transfer_suggestions(squad, pool, bank, n_transfers=1, top_k=8):
     """Cele mai bune transferuri: maximizeaza punctele echipei de start + capitan.
     Pretul de vanzare e aproximat cu pretul curent (API-ul public nu da pretul exact)."""
-    base = xi_score(squad)
-    owned = set(squad.element)
+    sq = squad.to_dict("records")
+    for r in sq:
+        r["puncte_prezise"] = float(r["puncte_prezise"])
+    base_pos = {}
+    for r in sq:
+        base_pos.setdefault(r["position"], []).append(r["puncte_prezise"])
+    base = _fast_score(base_pos)
+    clubs = {}
+    for r in sq:
+        clubs[r["team_name"]] = clubs.get(r["team_name"], 0) + 1
+    owned = {r["element"] for r in sq}
     candidates = pool[~pool.element.isin(owned) & (pool.puncte_prezise > 0)]
-    # limitam candidatii la cei mai buni pe pozitie si pret, ca sa fie rapid
     cand = (candidates.sort_values("puncte_prezise", ascending=False)
-            .groupby("position").head(40))
+            .groupby("position").head(40).to_dict("records"))
 
-    def valid(new_squad, money_left):
-        if money_left < -1e-9:
-            return False
-        if new_squad.team_name.value_counts().max() > MAX_PER_CLUB:
-            return False
-        return True
+    def score_after(outs, ins):
+        by_pos = {p: list(v) for p, v in base_pos.items()}
+        for o in outs:
+            by_pos[o["position"]].remove(o["puncte_prezise"])
+        for i in ins:
+            by_pos.setdefault(i["position"], []).append(float(i["puncte_prezise"]))
+        return _fast_score(by_pos)
+
+    def clubs_ok(outs, ins):
+        c = dict(clubs)
+        for o in outs:
+            c[o["team_name"]] -= 1
+        for i in ins:
+            c[i["team_name"]] = c.get(i["team_name"], 0) + 1
+        return max(c.values()) <= MAX_PER_CLUB
 
     singles = []
-    for _, out in squad.iterrows():
-        same = cand[cand.position == out.position]
-        for _, inn in same.iterrows():
-            money = bank + out.price - inn.price
-            new = pd.concat([squad[squad.element != out.element], inn.to_frame().T])
-            if not valid(new, money):
+    for out in sq:
+        for inn in cand:
+            if inn["position"] != out["position"]:
                 continue
-            new["puncte_prezise"] = new["puncte_prezise"].astype(float)
-            gain = xi_score(new) - base
-            singles.append({"iese": out.web_name, "intra": inn.web_name,
-                            "intra_echipa": inn.team_name, "pozitie": out.position,
-                            "pret_iese": out.price, "pret_intra": inn.price,
-                            "banca_ramasa": round(money, 1), "castig": round(gain, 2),
-                            "_out": out.element, "_in": inn.element})
-    singles = pd.DataFrame(singles)
-    if singles.empty:
-        return singles
-    singles = singles.sort_values("castig", ascending=False)
+            money = bank + out["price"] - inn["price"]
+            if money < -1e-9 or not clubs_ok([out], [inn]):
+                continue
+            singles.append({"iese": out["web_name"], "intra": inn["web_name"],
+                            "intra_echipa": inn["team_name"], "pozitie": out["position"],
+                            "pret_iese": out["price"], "pret_intra": inn["price"],
+                            "banca_ramasa": round(money, 1),
+                            "castig": round(score_after([out], [inn]) - base, 2),
+                            "_out": out, "_in": inn})
+    if not singles:
+        return pd.DataFrame()
+    singles.sort(key=lambda r: r["castig"], reverse=True)
     if n_transfers == 1:
-        return singles.drop(columns=["_out", "_in"]).head(top_k).reset_index(drop=True)
+        return (pd.DataFrame(singles).drop(columns=["_out", "_in"])
+                .head(top_k).reset_index(drop=True))
 
     # 2 transferuri: combinam cele mai bune transferuri simple (jucatori diferiti)
-    top = singles.head(40).to_dict("records")
     pairs = []
-    for a, b in itertools.combinations(top, 2):
-        if a["_out"] == b["_out"] or a["_in"] == b["_in"]:
+    for a, b in itertools.combinations(singles[:40], 2):
+        if a["_out"]["element"] == b["_out"]["element"] or a["_in"]["element"] == b["_in"]["element"]:
             continue
-        outs, ins = {a["_out"], b["_out"]}, {a["_in"], b["_in"]}
-        new = pd.concat([squad[~squad.element.isin(outs)], pool[pool.element.isin(ins)]])
-        money = bank + squad[squad.element.isin(outs)].price.sum() - pool[pool.element.isin(ins)].price.sum()
-        if not valid(new, money):
+        outs, ins = [a["_out"], b["_out"]], [a["_in"], b["_in"]]
+        money = bank + sum(o["price"] for o in outs) - sum(i["price"] for i in ins)
+        if money < -1e-9 or not clubs_ok(outs, ins):
             continue
-        new["puncte_prezise"] = new["puncte_prezise"].astype(float)
         pairs.append({"transfer_1": f"{a['iese']} -> {a['intra']}",
                       "transfer_2": f"{b['iese']} -> {b['intra']}",
                       "banca_ramasa": round(money, 1),
-                      "castig": round(xi_score(new) - base, 2)})
+                      "castig": round(score_after(outs, ins) - base, 2)})
     pairs = pd.DataFrame(pairs)
     if pairs.empty:
         return pairs

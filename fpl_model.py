@@ -215,6 +215,7 @@ def main():
                [c for c in pred.columns if c.startswith("adversar_etapa_")] +
                ["chance_of_playing_next_round", "status", "selected_by_percent", "element"]]
     out.insert(0, "etapa", gw)
+    out["actualizat"] = pd.Timestamp.now(tz="UTC").isoformat()
     out.to_csv(os.path.join(DATA, "predictii_etapa_urmatoare.csv"), index=False)
 
     cols = ["web_name", "team_name", "position", "price", "adversar", "puncte_prezise"]

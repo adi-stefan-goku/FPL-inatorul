@@ -1,5 +1,6 @@
 """FPL-inatorul -- web app (Streamlit). Local: porneste_site.py. Online: Streamlit Community Cloud."""
 import os
+import re
 
 import pandas as pd
 import streamlit as st
@@ -26,8 +27,12 @@ T = {
         "tabs": ["🧑‍💼 My team", "📈 Top players", "✅ Our track record", "🔬 How good is the model"],
         "my_team": "My team", "id_label": "Your FPL team ID",
         "id_help": "On fantasy.premierleague.com → Points: the number in the web address after /entry/",
-        "id_digits": "The ID must contain digits only.", "reading": "Reading your team from FPL...",
-        "read_fail": "Could not read team {id} (gameweek {gw}): {e}",
+        "id_digits": "Please enter the number from your FPL Points page (e.g. 1234567) or paste that page's link.", "reading": "Reading your team from FPL...",
+        "read_fail": "Couldn't reach FPL right now (the FPL site may be busy, especially around deadlines). Please try again in a minute.",
+        "not_found": "There's no FPL team with ID {id}. Check the number on your FPL Points page, after /entry/.",
+        "no_picks": "Team {id} exists but hasn't played a gameweek yet, so its squad isn't public. Come back after your first deadline — meanwhile, check the Top players tab.",
+        "intro": "Free points predictions for every Premier League player, plus your best XI, captain and transfers. Enter your team ID below.",
+        "status": {"d": "doubtful", "i": "injured", "s": "suspended", "u": "unavailable", "n": "not in squad"},
         "team": "Team", "total": "Total points", "rank": "Overall rank", "bank": "In the bank",
         "squad_note": "Squad as of Gameweek {c}. Transfers you already made for Gameweek {gw} are not "
                       "public until the deadline.",
@@ -40,7 +45,7 @@ T = {
         "transfer_note": "Gain = extra predicted points for your starting XI + captain ({h}). Selling price is "
                          "approximated by the current price (the public FPL API doesn't show your exact "
                          "selling price).",
-        "how_many": "How many transfers?", "searching": "Finding the best transfers (10-30 sec)...",
+        "how_many": "How many transfers?", "searching": "Finding the best transfers...",
         "no_transfer": "No transfer found that improves your team.",
         "hit_note": "If you only have one free transfer, the second one costs -4 points: only worth it if the "
                     "total gain is clearly above 4.",
@@ -143,9 +148,15 @@ st.sidebar.caption(L["preds_for"].format(gw=gw) +
 horizon = st.sidebar.radio(L["horizon"], [L["h3"], L["h1"]])
 metric = "puncte_3_etape" if horizon == L["h3"] else "puncte_prezise"
 st.sidebar.divider()
-updated = pd.Timestamp(mtime, unit="s", tz="UTC").tz_convert("Europe/London")
+updated = (pd.to_datetime(pred["actualizat"].iloc[0]) if "actualizat" in pred
+           else pd.Timestamp(mtime, unit="s", tz="UTC")).tz_convert("Europe/London")
 st.sidebar.caption(L["updated"].format(t=f"{updated:%d %b %H:%M}"))
 st.sidebar.caption(L["disclaimer"])
+
+st.title("⚽ FPL-inatorul")
+st.markdown(L["intro"])
+st.caption(L["preds_for"].format(gw=gw).replace("**", "") +
+           (f" · deadline {deadline:%a %d %b, %H:%M} (UK)" if deadline is not None else ""))
 
 tab_team, tab_top, tab_hist, tab_model = st.tabs(L["tabs"])
 base_cols = {"web_name": C["player"], "team_name": C["club"], "adversar": C["opp"],
@@ -156,14 +167,21 @@ with tab_team:
     st.header(L["my_team"])
     entry_id = st.text_input(L["id_label"], help=L["id_help"])
     if entry_id:
-        if not entry_id.strip().isdigit():
+        m = re.search(r"entry/(\d+)", entry_id) or re.fullmatch(r"\s*(\d+)\s*", entry_id)
+        if not m:
             st.error(L["id_digits"])
             st.stop()
         try:
             with st.spinner(L["reading"]):
-                team = cached_team(int(entry_id), current_gw)
-        except Exception as exc:  # noqa: BLE001
-            st.error(L["read_fail"].format(id=entry_id, gw=current_gw, e=exc))
+                team = cached_team(int(m.group(1)), current_gw)
+        except tt.TeamNotFound:
+            st.error(L["not_found"].format(id=m.group(1)))
+            st.stop()
+        except tt.NoPicksYet:
+            st.info(L["no_picks"].format(id=m.group(1)))
+            st.stop()
+        except Exception:  # noqa: BLE001
+            st.error(L["read_fail"])
             st.stop()
 
         squad = pred[pred.element.isin(team["elemente"])].copy()
@@ -194,7 +212,7 @@ with tab_team:
         injured = squad[squad.status.isin(["i", "s", "u", "d", "n"])]
         if not injured.empty:
             st.warning(L["availability"] + ", ".join(
-                f"{r.web_name} ({'' if pd.isna(r.chance_of_playing_next_round) else str(int(r.chance_of_playing_next_round)) + '% '}{r.status})"
+                f"{r.web_name} ({'' if pd.isna(r.chance_of_playing_next_round) else str(int(r.chance_of_playing_next_round)) + '% '}{L['status'].get(r.status, r.status)})"
                 for r in injured.itertuples()))
 
         st.subheader(L["transfers"])
