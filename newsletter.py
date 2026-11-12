@@ -111,6 +111,8 @@ def build():
     L += ["---", "",
           f"Want picks for **your** team? Enter your FPL ID at [{SITE.replace('https://', '')}]({SITE}) "
           "for your best XI, captain and transfers. Free, no sign-up.", "",
+          "Know someone who plays FPL? Forward this to them — they can subscribe at "
+          "[fplinator.substack.com](https://fplinator.substack.com).", "",
           "*Predictions are estimates from a statistical model, not guarantees. "
           "Unofficial, not affiliated with the Premier League.*"]
 

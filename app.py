@@ -151,10 +151,13 @@ st.sidebar.divider()
 updated = (pd.to_datetime(pred["actualizat"].iloc[0]) if "actualizat" in pred
            else pd.Timestamp(mtime, unit="s", tz="UTC")).tz_convert("Europe/London")
 st.sidebar.caption(L["updated"].format(t=f"{updated:%d %b %H:%M}"))
+st.sidebar.markdown("📬 [Weekly newsletter](https://fplinator.substack.com)")
 st.sidebar.caption(L["disclaimer"])
 
 st.title("⚽ FPL-inatorul")
 st.markdown(L["intro"])
+st.markdown("📬 **Free weekly picks by email** (captains, transfers, differentials, track record): "
+            "[fplinator.substack.com](https://fplinator.substack.com)")
 st.caption(L["preds_for"].format(gw=gw).replace("**", "") +
            (f" · deadline {deadline:%a %d %b, %H:%M} (UK)" if deadline is not None else ""))
 
