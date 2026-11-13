@@ -42,6 +42,10 @@ def fetch_team(entry_id, gw):
             raise NoPicksYet(entry_id) from exc
         raise
     hist = picks.get("entry_history", {})
+    try:  # chip-urile deja folosite (nume + etapa)
+        chips_used = [(c["name"], c["event"]) for c in get_json(f"entry/{entry_id}/history/").get("chips", [])]
+    except Exception:  # noqa: BLE001 -- nu e critic
+        chips_used = None
     return {
         "nume_echipa": entry.get("name"),
         "manager": f"{entry.get('player_first_name', '')} {entry.get('player_last_name', '')}".strip(),
@@ -50,6 +54,8 @@ def fetch_team(entry_id, gw):
         "banca": hist.get("bank", 0) / 10,
         "elemente": [p["element"] for p in picks["picks"]],
         "chip_activ": picks.get("active_chip"),
+        "chips_folosite": chips_used,
+        "valoare_echipa": hist.get("value", 0) / 10,
     }
 
 

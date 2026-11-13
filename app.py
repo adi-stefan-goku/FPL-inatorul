@@ -7,6 +7,7 @@ import streamlit as st
 
 import istoric
 import team_tools as tt
+import chip_planner as cp
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(ROOT, "data")
@@ -24,7 +25,7 @@ T = {
         "updated": "Data updated: {t} · refreshes automatically twice a day",
         "disclaimer": "Unofficial tool, not affiliated with the Premier League or Fantasy Premier League. "
                       "Predictions are estimates, not guarantees.",
-        "tabs": ["🧑‍💼 My team", "📈 Top players", "✅ Our track record", "🔬 How good is the model"],
+        "tabs": ["🧑‍💼 My team", "🃏 Chip planner", "📈 Top players", "✅ Our track record", "🔬 How good is the model"],
         "my_team": "My team", "id_label": "Your FPL team ID",
         "id_help": "On fantasy.premierleague.com → Points: the number in the web address after /entry/",
         "id_digits": "Please enter the number from your FPL Points page (e.g. 1234567) or paste that page's link.", "reading": "Reading your team from FPL...",
@@ -116,6 +117,11 @@ def cached_transfers(elements, bank, n, metric, mtime):
     return tt.transfer_suggestions(squad, pool, bank, n_transfers=n)
 
 
+@st.cache_data(show_spinner=False)
+def cached_plan(elements, bank, value, avail_items, mtime):
+    return cp.plan(load_predictions(mtime), list(elements), bank, value, dict(avail_items))
+
+
 @st.cache_data
 def load_history(mtime):
     return istoric.load_comparisons()
@@ -161,7 +167,8 @@ st.markdown("📬 **Free weekly picks by email** (captains, transfers, different
 st.caption(L["preds_for"].format(gw=gw).replace("**", "") +
            (f" · deadline {deadline:%a %d %b, %H:%M} (UK)" if deadline is not None else ""))
 
-tab_team, tab_top, tab_hist, tab_model = st.tabs(L["tabs"])
+tab_team, tab_chips, tab_top, tab_hist, tab_model = st.tabs(L["tabs"])
+team = None
 base_cols = {"web_name": C["player"], "team_name": C["club"], "adversar": C["opp"],
              "puncte_prezise": C["pts_gw"].format(gw=gw), "puncte_3_etape": C["pts3"], "price": C["price"]}
 
@@ -241,6 +248,58 @@ with tab_team:
             if best < 1:
                 st.info(L["small_gain"].format(g=best))
 
+
+# ---------------- Chip planner ----------------
+with tab_chips:
+    st.header("Chip planner")
+    st.markdown("When to play **Bench Boost, Triple Captain, Free Hit and Wildcard**, based on predicted points "
+                "for your current squad over the coming gameweeks.")
+    if team is None:
+        st.info("Enter your team ID in the **My team** tab first — the planner uses your squad.")
+    else:
+        fx_file, tm_file = os.path.join(DATA, "fixtures.csv"), os.path.join(DATA, "teams.csv")
+        avail = cp.chips_available_for(os.path.join(DATA, "chips.csv"), team.get("chips_folosite"), gw)
+        with st.spinner("Planning your chips..."):
+            table, recs = cached_plan(tuple(team["elemente"]), team["banca"], team.get("valoare_echipa"),
+                                      tuple(sorted(avail.items())), mtime)
+        if os.path.exists(fx_file) and os.path.exists(tm_file):
+            notes = cp.fixture_notes(pd.read_csv(fx_file), pd.read_csv(tm_file), table["GW"].tolist())
+            table.insert(1, "Fixtures", [
+                ("DGW: " + ", ".join(notes[g]["double"]) if notes[g]["double"] else "")
+                + (" · Blank: " + ", ".join(notes[g]["blank"]) if notes[g]["blank"] else "") or "normal"
+                for g in table["GW"]])
+            special = any(n["double"] or n["blank"] for n in notes.values())
+        else:
+            special = False
+
+        st.subheader("Recommendation")
+        for r in recs:
+            name = r["chip"]
+            if r["status"] == "used":
+                st.markdown(f"**{name}** — already used in this half of the season.")
+            elif r["status"] == "outside":
+                st.markdown(f"**{name}** — available, but its deadline is beyond our prediction window.")
+            elif name == "Wildcard":
+                st.markdown(f"**{name}** — rebuilding your squad would add about **+{r['gain']:.0f} pts over the next "
+                            f"{r['window']} gameweeks**. The gain keeps going after that, so earlier is usually better. "
+                            f"Must be used by the GW{r['last']} deadline.")
+            elif r["median"] and r["gain"] >= 1.25 * r["median"]:
+                st.markdown(f"**{name}** — best week: **GW{r['best_gw']}** (+{r['gain']:.1f} pts, a typical "
+                            f"week gives +{r['median']:.1f}). Must be used by GW{r['last']}.")
+            else:
+                st.markdown(f"**{name}** — no standout week yet (best GW{r['best_gw']}: +{r['gain']:.1f} pts, "
+                            f"typical +{r['median']:.1f}). Use it before the **GW{r['last']} deadline** or it's "
+                            f"lost; if FPL announces a double gameweek before then, that's usually the spot.")
+        if not special:
+            st.caption("No double or blank gameweeks are scheduled in this window yet. They're announced when "
+                       "matches get moved (cup games etc.) — we'll pick them up automatically.")
+
+        st.subheader("Gain from each chip, week by week (predicted points)")
+        st.dataframe(table, hide_index=True, width="stretch")
+        st.caption("Each number is the extra points that chip would add in that gameweek, assuming you keep your "
+                   "current squad. Wildcard = gain over the next few gameweeks starting that week. Predictions further "
+                   "ahead are rougher estimates (current form, only the opponent changes).")
+
 # ---------------- Top players ----------------
 with tab_top:
     st.header(L["top"].format(gw=gw))
@@ -254,7 +313,8 @@ with tab_top:
     view = view.sort_values("puncte_prezise" if sort_by == L["s1"] else "puncte_3_etape",
                             ascending=False).head(30)
     view["_pos"] = view.position.map(POS)
-    gw_cols = [c for c in pred.columns if c.startswith("adversar_etapa_")]
+    gw_cols = sorted((c for c in pred.columns if c.startswith("adversar_etapa_")),
+                     key=lambda c: int(c.rsplit("_", 1)[1]))[:3]
     show_table(view, ["web_name", "team_name", "_pos", "price", "puncte_prezise", "puncte_3_etape"]
                + gw_cols + ["selected_by_percent"],
                {**base_cols, "_pos": L["position"], "selected_by_percent": C["owned"],

@@ -32,7 +32,7 @@ HIST = os.path.join(DATA, "istoric")
 GITHUB = "https://raw.githubusercontent.com/vaastav/Fantasy-Premier-League/master/data"
 PAST_SEASONS = ["2022-23", "2023-24", "2024-25", "2025-26"]
 CURRENT = "2026-27"
-HORIZON = 3  # cate etape inainte prezicem (pentru transferuri)
+HORIZON = 9  # cate etape inainte prezicem (3 pentru transferuri, 9 pentru planificatorul de chip-uri: acopera pana la expirarea chip-urilor)
 pd.set_option("display.width", 200)
 
 
@@ -203,16 +203,18 @@ def main():
     pred = info.copy()
     pred["position"] = pred["position"].replace({"GKP": "GK"})
     pred = pred.merge(wide, on="element", how="left").merge(opp, on="element", how="left")
-    pts_cols = [c for c in pred.columns if c.startswith("pct_etapa_")]
+    pts_cols = sorted((c for c in pred.columns if c.startswith("pct_etapa_")),
+                      key=lambda c: int(c.rsplit("_", 1)[1]))
     pred[pts_cols] = pred[pts_cols].fillna(0).round(2)
     pred["puncte_prezise"] = pred.get(f"pct_etapa_{gw}", 0)
-    pred["puncte_3_etape"] = pred[pts_cols].sum(axis=1).round(2)
+    pred["puncte_3_etape"] = pred[pts_cols[:3]].sum(axis=1).round(2)
     pred["adversar"] = pred.get(f"adversar_etapa_{gw}", "").fillna("-")
     pred["meciuri"] = pred["element"].map(per_gw[per_gw.GW == gw].set_index("element")["meciuri"]).fillna(0).astype(int)
     pred = pred.sort_values("puncte_prezise", ascending=False)
     out = pred[["web_name", "team_name", "position", "price", "adversar", "meciuri",
                 "puncte_prezise", "puncte_3_etape"] + pts_cols +
-               [c for c in pred.columns if c.startswith("adversar_etapa_")] +
+               sorted((c for c in pred.columns if c.startswith("adversar_etapa_")),
+                      key=lambda c: int(c.rsplit("_", 1)[1])) +
                ["chance_of_playing_next_round", "status", "selected_by_percent", "element"]]
     out.insert(0, "etapa", gw)
     out["actualizat"] = pd.Timestamp.now(tz="UTC").isoformat()

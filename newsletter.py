@@ -33,7 +33,8 @@ def build():
     players_file = os.path.join(DATA, "players.csv")
     players = pd.read_csv(players_file) if os.path.exists(players_file) else pd.DataFrame()
 
-    gw_cols = sorted(c for c in pred.columns if c.startswith("adversar_etapa_"))
+    gw_cols = sorted((c for c in pred.columns if c.startswith("adversar_etapa_")),
+                     key=lambda c: int(c.rsplit("_", 1)[1]))[:3]
     avail = pred[pred.status.fillna("a") == "a"]
     L = [f"# FPL-inatorul Weekly — Gameweek {gw}", ""]
     if deadline:

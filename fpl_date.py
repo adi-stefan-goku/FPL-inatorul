@@ -88,6 +88,7 @@ def main():
     write_csv("players.csv", players)
     write_csv("teams.csv", teams)
     write_csv("gameweeks.csv", events)
+    write_csv("chips.csv", boot.get("chips", []))  # ferestrele chip-urilor (start/stop pe etape)
 
     print("2/3 Descarc fixtures (meciurile sezonului)...")
     fixtures = get_json("fixtures/")
