@@ -1,0 +1,9 @@
+id,name,number,start_event,stop_event,chip_type,overrides
+1,wildcard,1,2,19,transfer,"{""rules"": {}, ""scoring"": {}, ""element_types"": [], ""pick_multiplier"": null}"
+2,wildcard,1,20,38,transfer,"{""rules"": {}, ""scoring"": {}, ""element_types"": [], ""pick_multiplier"": null}"
+3,freehit,1,2,19,transfer,"{""rules"": {}, ""scoring"": {}, ""element_types"": [], ""pick_multiplier"": null}"
+4,bboost,1,1,19,team,"{""rules"": {}, ""scoring"": {}, ""element_types"": [], ""pick_multiplier"": null}"
+5,3xc,1,1,19,team,"{""rules"": {}, ""scoring"": {}, ""element_types"": [], ""pick_multiplier"": null}"
+6,freehit,1,20,38,transfer,"{""rules"": {}, ""scoring"": {}, ""element_types"": [], ""pick_multiplier"": null}"
+7,bboost,1,20,38,team,"{""rules"": {}, ""scoring"": {}, ""element_types"": [], ""pick_multiplier"": null}"
+8,3xc,1,20,38,team,"{""rules"": {}, ""scoring"": {}, ""element_types"": [], ""pick_multiplier"": null}"
